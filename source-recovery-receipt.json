@@ -1,0 +1,18 @@
+{
+  "status": "STAGED_NOT_DEPLOYED",
+  "created_at": "2026-08-02T11:11:38.497035+00:00",
+  "site": "australian-trade",
+  "page_count": 624,
+  "asset_count": 119,
+  "missing_live_image_count": 97,
+  "missing_asset_rewrite_count": 0,
+  "verification_files": [
+    "dece755ce3484f5085efb1d8bce35e36.txt"
+  ],
+  "html_batch": "scraped-data/site-source-recovery/20260802-1856",
+  "html_archive_sha256": "952f3dbef6c5db2fee87c623ec9f8e15c6b9e5529c1abe51e23015ffac638b1d",
+  "asset_batch": "scraped-data/site-source-recovery-assets/20260802-1904",
+  "asset_archive_sha256": "3af8e109a121350d27232da0571682e11233b6f9b96ac85288ea061c156b03e7",
+  "route_manifest_sha256": "f598339625097ae3c2e1d06a207ff01959f4bf56507c35476f8cd8caf825f52e",
+  "content_contract": "one durable live HTML record per public URL; page bytes retained unless a replacement is explicitly listed in recovery-route-manifest.jsonl"
+}
