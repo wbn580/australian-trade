@@ -1,0 +1,14 @@
+# Australian Trade Brief
+
+> Independent educational coverage of Australian trade, market entry, regulation and cross-border commercial research.
+
+## Topics
+- Trade agreements, tariffs and market-access concepts
+- Import, export and customs research
+- Australian company, investment and compliance information
+- Primary-source data and regulatory verification
+
+This site provides general information, not legal, tax or investment advice. Rules and market data change; verify current details with official authorities and qualified professionals.
+
+Canonical: https://australian.trade/
+Sitemap: https://australian.trade/sitemap-index.xml
