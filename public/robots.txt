@@ -4,3 +4,5 @@ Allow: /
 Sitemap: https://australian.trade/sitemap-index.xml
 
 Sitemap: https://australian.trade/sitemap-workbuddy.xml
+
+Sitemap: https://australian.trade/sitemap-0.xml
