@@ -21,6 +21,32 @@
 
 import { cp, mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { join, relative } from 'node:path';
+
+const MOBILE_NAV_ENHANCEMENT = `<style data-mobile-nav-fix>
+.hamb{min-width:44px;min-height:44px;align-items:center;justify-content:center;padding:0}
+.mobile-menu a{display:flex;min-height:44px;align-items:center;justify-content:center}
+</style><script data-mobile-nav-fix>(()=>{
+  const button=document.getElementById('hamb');
+  const menu=document.getElementById('mobileMenu');
+  if(!button||!menu||button.dataset.mobileNavBound)return;
+  button.dataset.mobileNavBound='true';
+  const setOpen=(open)=>{
+    menu.hidden=!open;
+    menu.classList.toggle('open',open);
+    menu.setAttribute('aria-hidden',String(!open));
+    button.setAttribute('aria-expanded',String(open));
+    button.setAttribute('aria-label',open?'Close menu':'Open menu');
+  };
+  button.addEventListener('click',()=>setOpen(menu.hidden));
+  menu.querySelectorAll('a').forEach((link)=>link.addEventListener('click',()=>setOpen(false)));
+  document.addEventListener('click',(event)=>{
+    if(!menu.hidden&&!menu.contains(event.target)&&!button.contains(event.target))setOpen(false);
+  });
+  document.addEventListener('keydown',(event)=>{
+    if(event.key==='Escape'&&!menu.hidden){setOpen(false);button.focus();}
+  });
+})();</script>`;
+
 await rm('dist', { recursive: true, force: true });
 await mkdir('dist', { recursive: true });
 await cp('public', 'dist', { recursive: true });
@@ -29,12 +55,20 @@ async function addCanonicals(dir) {
     const file = join(dir, entry.name);
     if (entry.isDirectory()) await addCanonicals(file);
     else if (entry.name.endsWith('.html')) {
-      const html = await readFile(file, 'utf8');
+      const original = await readFile(file, 'utf8');
+      let html = original;
       if (!/rel=["']canonical["']/.test(html)) {
         const route = relative('dist', file).replace(/index\.html$/, '').replace(/\.html$/, '');
         const canonical = new URL(`/${route}`, 'https://australian.trade').toString();
-        await writeFile(file, html.replace('<head>', `<head><link rel="canonical" href="${canonical}">`));
+        html = html.replace('<head>', `<head><link rel="canonical" href="${canonical}">`);
       }
+      if (html.includes('id="hamb"') && html.includes('id="mobileMenu"') && !html.includes('data-mobile-nav-fix')) {
+        html = html
+          .replace('id="hamb" aria-label="Open menu"', 'id="hamb" type="button" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false"')
+          .replace('id="mobileMenu"', 'id="mobileMenu" hidden aria-hidden="true"')
+          .replace('</body>', `${MOBILE_NAV_ENHANCEMENT}</body>`);
+      }
+      if (html !== original) await writeFile(file, html);
     }
   }
 }
