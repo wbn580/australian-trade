@@ -15,7 +15,6 @@ domain: "australian.trade"
 country: "AU"
 content_class: seo
 writer_contract: geo-fixed-v1
-hideFromHome: true
 tags: ["Trade", "Finance"]
 ogImage: "https://australian.trade/og-image.jpg"
 ---
